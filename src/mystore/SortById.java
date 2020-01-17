@@ -9,6 +9,7 @@ import java.util.Comparator;
  *
  * @author Jaxca
  */
+//Jämför produkt a och b och returnerar skillnaden så att de sorteras.
 public class SortById implements Comparator<Product>{
     public int compare(Product a, Product b){
         return a.GetID() - b.GetID();
