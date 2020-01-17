@@ -14,6 +14,7 @@ import java.util.Set;
  *
  * @author Jaxca
  */
+//Våra Arraylistor, innehåller produkterna och kundvagnens innehåll
 public class ProductManager {
     private ArrayList<Product> products = new ArrayList<Product>();
     private ArrayList<Product> cart = new ArrayList<Product>();
@@ -21,6 +22,7 @@ public class ProductManager {
     private Store store;
     private int currentProductIndex;
     
+     //Samling (index) av våra produkter. innehåller id, mängd, namn, ursprung, pris, vikt, om det är i kilopris och om det är ekologiskt.
     public ProductManager(Store store){
         this.store = store;
         products.add(new Product(30, 10, "Banana", "Costa rica", 4, 0.079, false, true));  
@@ -55,13 +57,14 @@ public class ProductManager {
         products.add(new Product(1, 1, "Watermelon", "Brazil", 29, 1.7, false, true));  
     }
     
-    
+    //knapp för att visa arraylistan "cart"s innehåll
     public void ShowCart(){
         int cost = 0;
         String output = "";
         
         for(Product product : cart){
             output += product.GetID() + " : " + product.GetName() +"\n";
+            //Visar olika information beroende på om produkten är i kilopris
             if(product.IsPricePerKilo()){
                 output +=  product.GetWeight() + "kg\nPrice: " + (product.GetPrice() * product.GetWeight()) +"\n";
             }
@@ -84,7 +87,7 @@ public class ProductManager {
         
         store.UpdateOutput(output);
     }
-    
+    //Används för att bläddra mellan produkterna
     public void Increment(){
         currentProductIndex++;
         store.UpdateOutput(GetCurrentProductInfo());
@@ -93,6 +96,7 @@ public class ProductManager {
         currentProductIndex--;
         store.UpdateOutput(GetCurrentProductInfo());
     }
+    //Knapp som låter en söka på det lägsta priset på en produkt
     public void SearchLowestPrice(double highest){
         String output = "";
         for(Product product : products){
@@ -103,6 +107,7 @@ public class ProductManager {
         }
         store.UpdateOutput(output);
     }
+    //Visar alla varor som har ecological = true
     public void ShowAllEcological(){
         String output = "";
         for(Product product : products){
