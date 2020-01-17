@@ -15,12 +15,17 @@ import java.util.Set;
  * @author Jaxca
  */
 public class ProductManager {
+    
+    //Skapar arrayerna products och vart
     private ArrayList<Product> products = new ArrayList<Product>();
     private ArrayList<Product> cart = new ArrayList<Product>();
     
+    //referencerar store
     private Store store;
+    //indexen i arrayen för producter(products)
     private int currentProductIndex;
     
+    //Constructor som skapar massor av produkter samt referencerar storen
     public ProductManager(Store store){
         this.store = store;
         products.add(new Product(30, 10, "Banana", "Costa rica", 4, 0.079, false, true));  
@@ -55,7 +60,7 @@ public class ProductManager {
         products.add(new Product(1, 1, "Watermelon", "Brazil", 29, 1.7, false, true));  
     }
     
-    
+    //Visa kundvagnen genom att gå igenom listan cart
     public void ShowCart(){
         int cost = 0;
         String output = "";
@@ -84,7 +89,7 @@ public class ProductManager {
         
         store.UpdateOutput(output);
     }
-    
+    // bläddra sidor med increment och decrement
     public void Increment(){
         currentProductIndex++;
         store.UpdateOutput(GetCurrentProductInfo());
@@ -93,6 +98,8 @@ public class ProductManager {
         currentProductIndex--;
         store.UpdateOutput(GetCurrentProductInfo());
     }
+    
+    
     public void SearchLowestPrice(double highest){
         String output = "";
         for(Product product : products){
@@ -194,6 +201,7 @@ public class ProductManager {
             store.SingelLayout();
         }
     }
+    //Hämta produkt baserat på namn
     public void GetProductByName(String name){
         boolean exists = false;
         for(int i = 0; i < products.size(); i++){
@@ -218,10 +226,12 @@ public class ProductManager {
 
         
     }
+    //Sortera baserat på produkternas id
     public void Sort(){
         Collections.sort(products,new SortById());
         ShowAllProducts();
     }
+    //visa alla produkter
     public void ShowAllProducts(){
         String output = "";
         for(Product product : products){
@@ -229,6 +239,7 @@ public class ProductManager {
         }
         store.UpdateOutput(output);
     }
+    //lägg till produkt och kolla om den redan finns
     public void AddProduct( int id, double quantity, String name, String heritage, double price, double weight, boolean isPricePerKilo, boolean ecological){
 
         
@@ -250,6 +261,7 @@ public class ProductManager {
         UpdateEcoNumbers();
         store.UpdateOutput(GetCurrentProductInfo());
     }
+    //hämta alla ekologiska respektive icke ekologiska till labelsen
     public void UpdateEcoNumbers(){
         int eco = 0, non = 0;
         
@@ -264,6 +276,7 @@ public class ProductManager {
         
         store.UpadeEcoLabels(eco, non);
     }
+    //ta bort en produkt baserad på dess id
     public void RemoveProduct(int id){
         
         for(int i = 0; i < products.size(); i++){
@@ -277,6 +290,7 @@ public class ProductManager {
         
         
     }
+    //hämta all information från en specifik produkt
     public String GetAllInfoFromProduct(Product product){
         String output = product.GetID() + 
                 " : " + product.GetName() +
@@ -288,6 +302,7 @@ public class ProductManager {
                 "\n Ecological : " + product.GetEcological();
         return output;
     }
+    //hämta all information om produkten från indexen
     public String GetCurrentProductInfo(){
         String output = GetCurrentProduct().GetID() + 
                 " : " + GetCurrentProduct().GetName() +
@@ -299,9 +314,11 @@ public class ProductManager {
                 "\n Ecological : " + GetCurrentProduct().GetEcological();
         return output;
     }
+    //hämta produkten från indexen
     public Product GetCurrentProduct(){
         return products.get(currentProductIndex);
     }
+    //Räknar ihop alla produkter i lagret
     public void TotalAmountOfProducts(){
         int amountOfProducts = 0;
          for(Product product : products){  
@@ -314,6 +331,7 @@ public class ProductManager {
         }
         store.TotalStorageSize(amountOfProducts);
     } 
+    //räknar ihop alla produkter samt deras vikter i lagret
     public void TotalCostOfStorage(){
         int cost = 0;
         for(Product product : products){  
